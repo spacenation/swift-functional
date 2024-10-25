@@ -1,4 +1,4 @@
 
-public func identity<A>(_ a: A) -> A {
+@Sendable public func identity<A: Sendable>(_ a: A) -> A {
     a
 }

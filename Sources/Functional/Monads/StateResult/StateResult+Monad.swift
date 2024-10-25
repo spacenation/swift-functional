@@ -1,6 +1,6 @@
 
 extension StateResult {
-    public func flatMap<B>(_ transform: @escaping (A) -> StateResult<S, B, Failure>) -> StateResult<S, B, Failure> {
+    public func flatMap<B>(_ transform: @escaping @Sendable (A) -> StateResult<S, B, Failure>) -> StateResult<S, B, Failure> {
         StateResult<S, B, Failure> { input in
             self.run(input)
                 .flatMap { transform($0.output).run($0.next) }

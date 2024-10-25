@@ -1,5 +1,5 @@
 
-public func not<A>(_ predicate: @escaping (A) -> Bool) -> (A) -> Bool {
+public func not<A>(_ predicate: @escaping @Sendable (A) -> Bool) -> @Sendable (A) -> Bool {
     { input in
         !predicate(input)
     }

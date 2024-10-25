@@ -1,8 +1,8 @@
 
 
 public extension StateResult {
-    init<DS>(_ initFunction: @escaping (DS) -> A, @StateResultBuilder _ builder: () -> StateResult<S, DS, Failure>) {
-        let stateResultFunction = StateResult<S, (DS) -> A, Failure>.pure(initFunction)
+    init<DS>(_ initFunction: @escaping @Sendable (DS) -> A, @StateResultBuilder _ builder: () -> StateResult<S, DS, Failure>) {
+        let stateResultFunction = StateResult<S, @Sendable (DS) -> A, Failure>.pure(initFunction)
         let intermediateResult = builder()
         self = stateResultFunction.apply(intermediateResult)
     }
