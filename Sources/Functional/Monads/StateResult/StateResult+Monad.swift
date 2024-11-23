@@ -7,6 +7,17 @@ extension StateResult {
         }
     }
     
+    public func flatMapError<NewFailure: Error>(_ transform: @escaping @Sendable (Failure) -> StateResult<S, A, NewFailure>) -> StateResult<S, A, NewFailure> {
+       StateResult<S, A, NewFailure> { input in
+           switch self.run(input) {
+               case .success(let result):
+                   .success(result)
+               case .failure(let error):
+                   transform(error).run(input)
+           }
+       }
+    }
+    
     // Static method to create a StateResult with a pure value
     public static func pure(_ value: A) -> StateResult<S, A, Failure> {
         StateResult { state in
